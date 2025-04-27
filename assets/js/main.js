@@ -108,14 +108,14 @@ const soundManager = new SoundManager();
 
 // 音声ファイルのロード。全部読み込むまで待機。
 await soundManager.loadAllSounds({
-    move: '/assets/audio/move.wav',
-    rotate: '/assets/audio/rotate.wav',
-    land: '/assets/audio/land.wav',
-    fix: '/assets/audio/fix.wav',
-    clear: '/assets/audio/clear.wav',
-    drop: '/assets/audio/drop.wav',
-    bgm_play: '/assets/audio/bgm_play.wav',
-    bgm_over: '/assets/audio/bgm_over.wav'  
+    move: './assets/audio/move.wav',
+    rotate: './assets/audio/rotate.wav',
+    land: './assets/audio/land.wav',
+    fix: './assets/audio/fix.wav',
+    clear: './assets/audio/clear.wav',
+    drop: './assets/audio/drop.wav',
+    bgm_play: './assets/audio/bgm_play.wav',
+    bgm_over: './assets/audio/bgm_over.wav'  
 
 });
 
@@ -155,14 +155,14 @@ setInputDevice('keyboard');
    ----------------------------------------- */
 const leftWallImg = new Image();
 //leftWallImg.src = '/assets/images/stone.bmp';
-leftWallImg.src = '/assets/images/renga.bmp';
+leftWallImg.src = './assets/images/renga.bmp';
 
 const rightWallImg = new Image();
 //rightWallImg.src = '/assets/images/muddy.bmp';
-rightWallImg.src = '/assets/images/renga.bmp';
+rightWallImg.src = './assets/images/renga.bmp';
 
 const downWallImg = new Image();
-downWallImg.src = '/assets/images/renga.bmp';
+downWallImg.src = './assets/images/renga.bmp';
 
 /* 画像 ─ 上壁用を追加（既存画像を流用して OK） */
 const topWallImg = downWallImg;        // 別画像なら差し替えて下さい
