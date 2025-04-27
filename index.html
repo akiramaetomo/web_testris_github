@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Tetris with Lock Delay and Separated Sounds</title>
+    <style>
+        #titleScreen {
+            z-index: 2;
+            /* ← これを追加 (position:absolute なので有効) */
+        }
+
+        #bgCanvas {
+            position: fixed;
+            /* スクロールしても動かない最背面レイヤー */
+            inset: 0;
+            /* 画面全体を覆う */
+            z-index: 0;
+            /* 他レイヤーより背面。必要なら -1 でも可 */
+            pointer-events: none;
+            /* クリックを透過させる */
+        }
+
+        #gameContainer {
+            /* 既存ゲーム領域を前面へ */
+            position: relative;
+            z-index: 1;
+        }
+
+
+
+        /* ★[全体デザイン]: ページ全体の背景など */
+        body {
+            background-color: #001d3b;
+            /* ダークグレー背景 */
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+        }
+
+        /* ★[レイアウト1] メインコンテナを横並びに */
+        #gameContainer {
+            display: flex;
+            flex-direction: row;
+            margin: 20px;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        /* ★[左側エリア]: ゲームCanvas */
+        #leftArea {
+            display: flex;
+            flex-direction: column;
+            margin-right: 20px;
+            /* 右側との間隔 */
+        }
+
+        /* ゲームCanvas（壁＋プレイ領域） */
+        #gameCanvas {
+            background-color: #000;
+            border: 2px solid #222;
+            display: block;
+        }
+
+        /* ★[右側エリア]: 縦に並べて次ブロックCanvas＆ダミー領域 */
+        #rightArea {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            /* 左寄せ */
+        }
+
+        /* 次ブロックCanvas: 幅80×高さ80に固定(4×4マスを想定) */
+        #nextCanvas {
+            background-color: #000;
+            border: 2px solid #222;
+            display: block;
+            margin-bottom: 20px;
+        }
+
+        /* ダミー領域(将来的にスコアや各種情報を表示) */
+        #infoArea {
+            width: 80px;
+            height: 200px;
+            background-color: #333;
+            /* 薄暗い背景 */
+            color: #fff;
+            padding: 5px;
+            box-sizing: border-box;
+            font-size: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="bgCanvas"></canvas>
+
+    <!-- ★ 追加：キーボードフォーカス可 -->
+    <div id="titleScreen" tabindex="0" style="position:absolute; inset:0; display:flex;
+        flex-direction:column; justify-content:center; align-items:center;
+        background:#0005; color:white; font:24px sans-serif;">
+        <p style="margin:0 0 1rem 0; font-size:64px;">□■□■ TEsTRIS □■□■</p>
+        <p style="margin:0;">ver0.9 2025 akira maetomo</p>
+        <p style="margin:0;">PC only</p>
+        <p style="margin:0;">Press [K] for Keyboard / [G] for Gamepad</p>
+        <p style="margin:0;">move:L[A] R[S] drop[Z] rot:L[←] R[→]</p>
+    </div>
+
+    <div id="gameContainer">
+        <!-- ★[左エリア]: ゲームCanvasを配置 -->
+        <div id="leftArea">
+            <canvas id="gameCanvas"></canvas>
+        </div>
+
+        <!-- ★[右エリア]: 縦に並べて、上=次ブロックCanvas、下=ダミー領域 -->
+        <div id="rightArea">
+            <canvas id="nextCanvas" width="160" height="160"></canvas>
+            <div id="infoArea">
+                ここはダミー領域(スコア表示などに活用予定)
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 負荷率表示用 -->
+    <div id="perfStats" style="position:absolute; right:8px; top:8px;
+           color:#0f0; font:12px monospace; pointer-events:none;
+           background:rgba(0,0,0,.35); padding:2px 4px;
+           display:none;">
+    </div>
+
+
+
+    <!-- ★[サウンド定義]: 以前ここで行っていたが削除。soundManager.jsにて実施 -->
+
+    <!-- ★ 外部JavaScriptファイルを読み込み -->
+    <script type="module" src="assets/js/main.js"></script>
+
+</body>
+
+</html>
