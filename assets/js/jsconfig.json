@@ -1,0 +1,11 @@
+// jsconfig.json
+{
+    "compilerOptions": {
+        "target": "ES2020",
+        "allowJs": true, // ← JS を解析対象に
+        "checkJs": true // ← 型チェック不要なら false でも OK
+    },
+    "include": [
+        "**/*.js"
+    ]
+}

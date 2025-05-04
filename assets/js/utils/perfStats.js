@@ -1,5 +1,5 @@
 // utils/perfStats.js  ── ES Module
-//負荷率を計測するためのclass　メインのloop内、でbegin、endをcall。
+//負荷率を計測するためのclassメインのloop内、でbegin、endをcall。
 //F3キーで非表示
 export class PerfStats {
     /**

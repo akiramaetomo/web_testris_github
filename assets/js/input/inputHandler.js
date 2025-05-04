@@ -1,10 +1,16 @@
-// src/input/inputHandler.js
+// ./input/inputHandler.js
 export const ACTIONS = Object.freeze({
     MOVE_LEFT: 'move_left',
     MOVE_RIGHT: 'move_right',
+    MOVE_UP: 'move_up',
+    MOVE_DOWN: 'move_down',
     ROTATE_L: 'rotate_l',
     ROTATE_R: 'rotate_r',
-    SOFT_DROP: 'soft_drop'
+    SOFT_DROP: 'soft_drop',
+    ENTER: 'enter',
+    START: 'start',
+    RESTART: 'restart',
+    BACK: 'back'
 });
 
 export class InputHandler {
