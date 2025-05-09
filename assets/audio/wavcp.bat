@@ -10,3 +10,5 @@ copy loop1_v3.wav bgm_init.wav
 copy gameover3.wav bgm_over.wav
 copy explosion_2.00ms.wav se_over.wav
 
+
+copy TB303_1-7L_short.wav bgm_play2.wav

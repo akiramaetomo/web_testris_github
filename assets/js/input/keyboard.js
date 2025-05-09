@@ -25,7 +25,7 @@ export class KeyboardInputHandler extends InputHandler {
         };
         window.addEventListener('keydown', e => {
             if (e.repeat) return;                 // ★ repeat を丸ごと無視
-            console.log('[DBG] keydown', e.key);   //for debug
+//            console.log('[DBG] keydown', e.key);   //for debug
             const act = this.keymap[e.key];
             if (act) this.active.add(act);
         });

@@ -57,7 +57,7 @@ export class WallpaperController {
                 src = './assets/images/wall1.png';
                 break;
             case 'gameover':
-                src = './assets/images/wall3.png';
+                src = './assets/images/wall1.png';
                 break;
             default:
                 src = './assets/images/wall3.png';

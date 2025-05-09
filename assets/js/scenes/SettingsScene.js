@@ -1,52 +1,54 @@
 import { Scene } from '../core/Scene.js';
 import { ACTIONS } from '../input/inputHandler.js';
-import { DROP_SPEED_LABELS } from '../core/GameConfig.js';
+//import { DROP_SPEED_LABELS } from '../core/GameConfig.js';
+import { SETTING_DEFINITIONS } from '../config/settingDefinitions.js';
 
 export default class SettingsScene extends Scene {
-    constructor() {
-        super();
-        this._cursor = 0;
-        this.options = [
-            { label: '落下速度', values: DROP_SPEED_LABELS, selected: 3 },
-            { label: 'BGM', values: ['bgm_play', 'bgm_over', 'loop1_v3'], selected: 0 },
-            { label: 'フィールド', values: ['10×20', '15×30', '20×40'], selected: 0 },
-            // { label: '入力デバイス', values: ['Keyboard', 'Gamepad'], selected: 0 },
-        ];
 
-        // Restore saved settings
-        if (window.settingOptions) {
-            this.options.forEach(opt => {
-                const saved = window.settingOptions[opt.label];
-                if (typeof saved === 'number' && saved >= 0 && saved < opt.values.length) {
-                    opt.selected = saved;
-                }
-            });
-        }
+    constructor(mgr) {
+        super(mgr);
+
+        this._cursor = 0;
+
+        // 各設定項目を UI 表示用に変換（インデックス付き）
+        this.options = SETTING_DEFINITIONS.map(def => {
+            const saved = window.settingOptions?.[def.key];
+            const index = def.options.findIndex(opt => JSON.stringify(opt.value) === JSON.stringify(saved));
+            return {
+                key: def.key,
+                label: def.label,
+                values: def.options.map(opt => opt.label),
+                selected: index >= 0 ? index : def.defaultIndex
+            };
+        });
     }
+
+
+
 
     enter() {
-        // メニュー画面用 BGM 再生 (初期化時に実行)
-        // window.bgmManager.play('bgm_init');
-        // immediate key handling for returning to menu
-        this._onKey = (e) => {
-            if (e.key === 'c' || e.key === 'C' || e.key === 'Enter') {
-                this._mgr.changeTo('title');
-            }
-        };
-        window.addEventListener('keydown', this._onKey);
+
     }
+
+
     exit() {
-        // Save settings to persist across scenes
+        // 設定値の保存（選択 index → 実際の value に変換）
         window.settingOptions = {};
         this.options.forEach(opt => {
-            window.settingOptions[opt.label] = opt.selected;
+            const def = SETTING_DEFINITIONS.find(d => d.key === opt.key);
+            const selectedValue = def.options[opt.selected].value;
+            window.settingOptions[opt.key] = selectedValue;
         });
-        window.removeEventListener('keydown', this._onKey);
+
+        // 設定変更をゲーム全体に適用
+        window.app.reconfigure();
+
     }
 
 
-    update(dt) {
-        // Cキー/Enterキー or ゲームパッドのBackボタンでタイトルへ戻る
+
+    update() {
+        //'B',enter,ゲームパッドのBackボタンでタイトルへ戻る
         if (window.input.isPressed(ACTIONS.BACK) || window.input.isPressed(ACTIONS.ENTER)) {
             this._mgr.changeTo('title');
             return;

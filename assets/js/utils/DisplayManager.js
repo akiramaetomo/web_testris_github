@@ -21,7 +21,7 @@ class ViewBase {
 class StatsView extends ViewBase {
     update(state) {
         const s     = StatsManager.getStats();
-        const speed = state.cfg.dropSpeedLabel;
+        const speed = state.cfg.speedIndexLabel;
         const html = /*html*/`
             落下速度: ${speed}<br>
             落下ブロック数: ${s.dropCount}<br>

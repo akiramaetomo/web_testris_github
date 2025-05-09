@@ -54,7 +54,7 @@ export class BGMManager {
      * @param {string} trackKey - 切り替え先トラックのキー
      * @param {number} [fadeMs=1000] - フェード時間（ms）
      */
-    switch(trackKey, fadeMs = 1000) {
+    switch(trackKey, fadeMs = 500) {
         if (this.currentTrack) {
             soundManager.fadeOutBgm(fadeMs);
         }

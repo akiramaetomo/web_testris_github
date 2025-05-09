@@ -4,22 +4,28 @@ import { ACTIONS } from '../input/inputHandler.js';  // ★ 追加
 //import { soundManager } from '../audio/globalSoundManager.js'; // ←シングルトンで共有している想定
 import { EventBus } from '../utils/EventBus.js';
 
-//soundManager.play('bgm_title', { loop:true, bus:'bgm' });
 
 export default class TitleScene extends Scene {
 
-    constructor(mgr) { super(); this._mgr = mgr; }   // ← mgr 受け取る
-
+    constructor(mgr) { //本当は不要。他に処理が無い場合は親クラスのコンストラクタが使えるため。
+        super(mgr); 
+    } 
+    
     enter() {
         console.log('[Scene] enter Title !!!!!');
         EventBus.emit('phaseChanged', 'title');
         // メニュー画面用 BGM 再生
-        this._mgr.app.bgm.play('bgm_init');
+        this._mgr.app.bgmMgr.play('bgm_init');
         document.getElementById('gameCanvas').focus();
         // Add key listener for Settings
-        this._onKey = (e) => {
-            if (e.key === 's' || e.key === 'S') this._mgr.changeTo('settings');
-        };
+
+        //nextブロック領域の消去
+        const nextCanvas = document.getElementById('nextCanvas');
+        if (nextCanvas) {
+            const nextCtx = nextCanvas.getContext('2d');
+            nextCtx.clearRect(0, 0, nextCanvas.width, nextCanvas.height);
+        }
+
         window.addEventListener('keydown', this._onKey);
     }
 
@@ -28,7 +34,7 @@ export default class TitleScene extends Scene {
         window.removeEventListener('keydown', this._onKey);
     }
 
-    update(dt) {
+    update() {
         if (window.input.isPressed(ACTIONS.ENTER) || window.input.isPressed(ACTIONS.START)) {
             // Apply desired device if set
             if (window.desiredDevice) {
@@ -50,10 +56,10 @@ export default class TitleScene extends Scene {
     draw(ctx) {
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
         ctx.fillStyle = 'white';
-        ctx.font = 'bold 48px sans-serif';
+        ctx.font = 'bold 64px sans-serif';
         ctx.textAlign = 'center';
-        ctx.fillText('■■■■■TeST-Ris■■■■■', ctx.canvas.width / 2, ctx.canvas.height / 2);
-        ctx.font = '24px sans-serif';
+        ctx.fillText('■TeST-Ris■', ctx.canvas.width / 2, ctx.canvas.height / 2);
+        ctx.font = '28px cursive';
         ctx.fillText('Press Enter(START) to start', ctx.canvas.width / 2, ctx.canvas.height / 2 + 40);
         ctx.fillText('Press B(BACK) for Settings', ctx.canvas.width / 2, ctx.canvas.height / 2 + 80);
     }

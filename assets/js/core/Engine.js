@@ -7,7 +7,7 @@
  * - ループごとに経過時間 (dt) を計算し、コールバックに渡して更新・描画をドライブ
  * - requestAnimationFrame を用いて安定したフレーム駆動を実現
  */
-import { GameConfig } from './GameConfig.js';
+//import { GameConfig } from './GameConfig.js';
 
 export class Engine {
     /**
